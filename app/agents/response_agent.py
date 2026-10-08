@@ -27,18 +27,14 @@ def generate_response(
         customer = customer_360.get("customer", {})
 
         customer_context = f"""
-Customer 360 information:
-Customer name: {customer.get("full_name", "Unknown")}
-Customer risk level: {customer.get("risk_level", "Unknown")}
+Customer information:
+Customer Code: {customer.get("customer_code")}
+Customer Name: {customer.get("full_name")}
+Customer Risk Level: {customer.get("risk_level")}
 
-Accounts:
-{customer_360.get("accounts", [])}
-
-Recent transactions:
-{customer_360.get("transactions", [])}
-
-Previous support tickets:
-{customer_360.get("support_tickets", [])}
+Number of Accounts: {len(customer_360.get("accounts", []))}
+Number of Recent Transactions: {len(customer_360.get("transactions", []))}
+Number of Support Tickets: {len(customer_360.get("support_tickets", []))}
 """
 
     prompt = f"""
@@ -62,26 +58,12 @@ Generate a clear, professional and helpful response.
 
 Rules:
 - Use the provided banking knowledge.
-- Use Customer 360 information only when relevant to the customer's request.
+- Use Customer 360 information only when relevant.
+- Do not expose unnecessary sensitive customer information.
 - Do not invent bank policies.
-- Do not claim that a refund, transaction, payment, or account action
-  has been completed.
-- Sensitive banking operations require customer verification.
-- Never reveal sensitive account information such as account balance,
-  full account number, transaction details, or other private financial
-  information unless the provided information explicitly confirms that
-  customer verification has been completed.
-- If the customer asks for sensitive account information without
-  verification, clearly state that customer verification is required
-  before providing the information.
-- For fraud, unauthorized transactions, suspicious activity, or
-  unresolved financial disputes, mention that investigation or human
-  review may be required when appropriate.
-- If a refund is requested for a duplicate or unauthorized transaction,
-  do not confirm the refund. Explain that the transaction must first be
-  reviewed and verified.
-- Do not expose unnecessary customer information in the response.
-- Keep the response concise and customer-friendly.
+- Do not claim that a refund or transaction has been completed.
+- If verification or human review is required, clearly mention it.
+- Keep the response concise.
 """
 
     response = llm.invoke(prompt)

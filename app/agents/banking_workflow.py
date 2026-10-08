@@ -2,15 +2,15 @@ from typing import TypedDict
 
 from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
-from langgraph.types import interrupt
+from langgraph.types import interrupt, Command
 
 from app.agents.router_agent import router_graph
 from app.agents.risk_agent import assess_risk
 from app.agents.rag_agent import search_knowledge
 from app.agents.response_agent import generate_response
 from app.agents.validation_agent import validate_response
-from app.database.customer_service import fetch_customer_360
 from app.mcp.server import create_support_ticket
+from app.database.customer_service import fetch_customer_360
 
 
 class BankingState(TypedDict):
@@ -35,11 +35,12 @@ class BankingState(TypedDict):
 
 
 def customer_360_node(state: BankingState):
+
     customer_360 = fetch_customer_360(
         state["customer_code"]
     )
 
-    if not customer_360:
+    if customer_360 is None:
         raise ValueError(
             f"Customer not found: {state['customer_code']}"
         )
@@ -50,6 +51,7 @@ def customer_360_node(state: BankingState):
 
 
 def router_node(state: BankingState):
+
     result = router_graph.invoke(
         {
             "customer_message": state["customer_message"],
@@ -65,10 +67,17 @@ def router_node(state: BankingState):
 
 
 def risk_node(state: BankingState):
-    customer_risk = (
-        state["customer_360"]
-        .get("customer", {})
-        .get("risk_level", "LOW")
+
+    customer_360 = state["customer_360"]
+
+    customer = customer_360.get(
+        "customer",
+        {}
+    )
+
+    customer_risk = customer.get(
+        "risk_level",
+        "LOW"
     )
 
     result = assess_risk(
@@ -86,6 +95,7 @@ def risk_node(state: BankingState):
 
 
 def rag_node(state: BankingState):
+
     knowledge = search_knowledge(
         state["customer_message"]
     )
@@ -96,6 +106,7 @@ def rag_node(state: BankingState):
 
 
 def response_node(state: BankingState):
+
     response = generate_response(
         customer_message=state["customer_message"],
         category=state["category"],
@@ -110,6 +121,7 @@ def response_node(state: BankingState):
 
 
 def validation_node(state: BankingState):
+
     validation = validate_response(
         customer_message=state["customer_message"],
         response=state["response"],
@@ -122,12 +134,10 @@ def validation_node(state: BankingState):
 
 
 def human_review_node(state: BankingState):
+
     decision = interrupt(
         {
-            "message": (
-                "Human approval required for this "
-                "high-risk banking case."
-            ),
+            "message": "Human approval required for this high-risk banking case.",
             "customer_code": state["customer_code"],
             "category": state["category"],
             "priority": state["priority"],
@@ -143,27 +153,25 @@ def human_review_node(state: BankingState):
 
 
 def action_node(state: BankingState):
-    is_high_risk = (
-        state["priority"] == "HIGH"
-        or state["risk_level"] == "HIGH"
-    )
 
-    # High-risk cases require explicit human approval.
-    if is_high_risk:
-        if state.get("human_approved") is not True:
-            return {
-                "ticket": {
-                    "success": False,
-                    "message": "Human approval required"
-                }
+    if state.get("human_approved") is False:
+        return {
+            "ticket": {
+                "success": False,
+                "message": "Human approval required"
             }
+        }
 
     validation = state["validation"]
 
     if (
         validation.get("valid") == "YES"
-        and is_high_risk
+        and (
+            state["priority"] == "HIGH"
+            or state["risk_level"] == "HIGH"
+        )
     ):
+
         ticket = create_support_ticket(
             customer_code=state["customer_code"],
             subject=state["category"],
@@ -172,7 +180,9 @@ def action_node(state: BankingState):
             priority=state["priority"],
             risk_level=state["risk_level"]
         )
+
     else:
+
         ticket = {
             "success": False,
             "message": "No ticket creation required"
@@ -184,6 +194,7 @@ def action_node(state: BankingState):
 
 
 def route_after_validation(state: BankingState):
+
     if (
         state["priority"] == "HIGH"
         or state["risk_level"] == "HIGH"
@@ -289,6 +300,7 @@ graph_builder.add_edge(
 
 
 memory = MemorySaver()
+
 
 banking_graph = graph_builder.compile(
     checkpointer=memory
