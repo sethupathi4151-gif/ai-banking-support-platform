@@ -1,0 +1,47 @@
+BANKING COMPANY POLICIES
+
+Customer Verification Policy
+
+Customer verification is required before accessing sensitive account information or performing sensitive banking operations.
+
+Customers may be asked to verify their identity before account-specific information is provided.
+
+Account Information Policy
+
+Customers can request general information about account types, account status, and available banking services.
+
+Sensitive account information should only be provided after successful customer verification.
+
+Transaction Dispute Policy
+
+Customers can report incorrect, duplicate, or unauthorized transactions.
+
+Transaction disputes must be reviewed before any refund or adjustment is confirmed.
+
+Duplicate transactions should be investigated to verify that the same transaction was processed more than once.
+
+Fraud Policy
+
+Unauthorized transactions and suspected fraudulent activity must be treated as high-priority cases.
+
+Fraud-related cases may require additional customer verification and human review.
+
+High-risk fraud cases must be escalated to the appropriate support team.
+
+Card Security Policy
+
+Lost or stolen cards should be reported immediately.
+
+Card blocking and replacement requests may require customer verification.
+
+Loan Policy
+
+Loan-related requests may require verification of customer account information.
+
+Customers can request information about loan eligibility, repayment schedules, interest rates, and outstanding balances.
+
+Escalation Policy
+
+High-risk fraud, unauthorized transactions, suspicious activity, and unresolved financial disputes should be escalated for human review.
+
+Customer support agents should not confirm sensitive financial actions without appropriate verification.

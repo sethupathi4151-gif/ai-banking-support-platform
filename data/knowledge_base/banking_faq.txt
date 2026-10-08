@@ -1,0 +1,33 @@
+BANKING FAQ
+
+Account Information
+Customers can view their account balance, account status, and account type through the banking support system.
+
+Transaction Dispute
+Customers can raise a dispute for an incorrect, duplicate, or unauthorized transaction.
+Duplicate transactions should be reviewed before a refund is processed.
+
+Fraud and Unauthorized Transactions
+Customers should immediately report unauthorized transactions.
+Fraud-related cases should be treated as high-priority cases and may require additional verification.
+
+Card Support
+Customers can report card blocking, card activation, lost cards, stolen cards, and card transaction issues.
+
+Loan Support
+Customers can request information about loan eligibility, repayment schedules, interest rates, and outstanding balances.
+Loan-related requests may require verification of the customer's account information.
+
+Payment Issues
+Payment failures can occur because of insufficient balance, bank-side processing issues, network problems, or merchant-side issues.
+Customers should verify the transaction status before attempting the payment again.
+
+Refunds
+Refund processing time depends on the transaction type and merchant.
+A duplicate or unauthorized transaction should be investigated before confirming a refund.
+
+Customer Verification
+Sensitive banking operations require customer verification before any action is performed.
+
+Escalation
+High-risk fraud, unauthorized transactions, suspicious activity, and unresolved financial disputes should be escalated for human review.

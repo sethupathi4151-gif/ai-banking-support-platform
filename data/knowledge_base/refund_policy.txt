@@ -1,0 +1,33 @@
+REFUND AND TRANSACTION DISPUTE POLICY
+
+Refund Processing
+
+Refunds are not automatically guaranteed when a customer reports a transaction issue.
+
+The transaction must be reviewed before a refund is confirmed.
+
+Duplicate Transactions
+
+If a customer reports being charged twice for the same purchase, the transaction should be investigated to determine whether a genuine duplicate transaction occurred.
+
+A refund should not be confirmed before the duplicate transaction has been verified.
+
+Unauthorized Transactions
+
+Unauthorized transactions should be reported immediately.
+
+Unauthorized transaction cases require investigation and may require customer verification.
+
+High-risk unauthorized transaction cases should be escalated for human review.
+
+Merchant Refunds
+
+Some refunds depend on the merchant's refund process.
+
+The support team should not provide a specific refund completion date unless the applicable policy or transaction information confirms it.
+
+Refund Communication
+
+Customer support responses should clearly explain that the transaction must be reviewed before a refund can be confirmed.
+
+Agents must not claim that a refund has been processed unless the system confirms that the refund was completed.
